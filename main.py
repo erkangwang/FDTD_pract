@@ -1,4 +1,5 @@
 from FDTD_cell import fdtd_cell_1D
+from fdtd_2d_cell import fdtd_cell_2D
 import numpy as np
 from numpy.random import random
 import matplotlib.pyplot as plt
@@ -42,37 +43,90 @@ t_space_ind = np.linspace(0, num_time_point-1, num=num_time_point, dtype=int)
 src_ind = 50
 #E_amp = np.linspace(0, 100, num=100)
 aa = fdtd_cell_1D(t_space_ind, src_ind)
-aa = aa.reshape((602, 101))
+aa = aa.reshape((num_time_point+1, 101))
 print(aa.shape)
 
-x = aa[0]
-y = aa[1]
-# to run GUI event loop
+#x = aa[0]
+#y = aa[1]
+## to run GUI event loop
+#plt.ion()
+## here we are creating sub plots
+#figure, ax = plt.subplots(figsize=(10, 5))
+#plt.ylim(-2, 2)
+##plt.xlim(0,10)
+#line1, = ax.plot(x, y)
+## setting title
+#plt.title("1D FDTD", fontsize=20)
+## setting x-axis label and y-axis label
+#plt.xlabel("X-axis")
+#plt.ylabel("Y-axis")
+#
+#for t in t_space_ind:
+#
+#    # creating new Y values
+#    new_y = aa[t]
+#    # updating data values
+#    line1.set_xdata(x)
+#    line1.set_ydata(new_y)
+#    # drawing updated values
+#    figure.canvas.draw()
+#
+#    # This will run the GUI event
+#    # loop until all UI events
+#    # currently waiting have been processed
+#    figure.canvas.flush_events()
+#    time.sleep(0.00001)
+
+
+
+
+
+#2D FDTD
+num_time_point=201
+t_space_ind = np.linspace(0, num_time_point-1, num=num_time_point, dtype=int)
+src_ind = 50
+aa = fdtd_cell_2D(t_space_ind, src_ind)
+print(aa.shape)
+#plt.plot(aa[20])
+#plt.show()
+
 plt.ion()
-# here we are creating sub plots
-figure, ax = plt.subplots(figsize=(10, 5))
-plt.ylim(-6, 6)
+fig, ax = plt.subplots()
+#plt.ylim(-2, 2)
 #plt.xlim(0,10)
-line1, = ax.plot(x, y)
+img_initial = aa[0]
+image = ax.imshow(img_initial, cmap='gray', vmin=0, vmax=5)
+
 # setting title
-plt.title("1D FDTD", fontsize=20)
+plt.title("2D FDTD", fontsize=20)
 # setting x-axis label and y-axis label
 plt.xlabel("X-axis")
 plt.ylabel("Y-axis")
 
-for t in t_space_ind:
 
-    # creating new Y values
-    new_y = aa[t]
+for t in t_space_ind:
+    new_image = aa[t]
     # updating data values
-    line1.set_xdata(x)
-    line1.set_ydata(new_y)
+    image.set_data(new_image)
     # drawing updated values
-    figure.canvas.draw()
+    fig.canvas.draw()
 
     # This will run the GUI event
     # loop until all UI events
     # currently waiting have been processed
-    figure.canvas.flush_events()
+    fig.canvas.flush_events()
+    time.sleep(0.001)
 
-    time.sleep(0.01)
+
+
+
+#plt.imshow(aa[20]-aa[0], cmap='gray', vmax=10)
+#plt.show()
+#
+#print(aa[0])
+#print(aa[20])
+
+
+
+
+
