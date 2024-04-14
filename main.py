@@ -42,7 +42,7 @@ t_space_ind = np.linspace(0, num_time_point-1, num=num_time_point, dtype=int)
 src_ind = 50
 #E_amp = np.linspace(0, 100, num=100)
 aa = fdtd_cell_1D(t_space_ind, src_ind)
-aa = aa.reshape((602, 101))
+aa = aa.reshape((num_time_point+1, 101))
 print(aa.shape)
 
 x = aa[0]
@@ -51,7 +51,7 @@ y = aa[1]
 plt.ion()
 # here we are creating sub plots
 figure, ax = plt.subplots(figsize=(10, 5))
-plt.ylim(-6, 6)
+plt.ylim(-2, 2)
 #plt.xlim(0,10)
 line1, = ax.plot(x, y)
 # setting title
@@ -75,4 +75,4 @@ for t in t_space_ind:
     # currently waiting have been processed
     figure.canvas.flush_events()
 
-    time.sleep(0.01)
+    time.sleep(0.001)

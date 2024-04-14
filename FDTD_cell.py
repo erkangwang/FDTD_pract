@@ -7,7 +7,7 @@ def fdtd_cell_1D(t_space_ind, src_ind):
     delta_t = 10**-8 # s
     Nz = 101
     Yee_Grid_Space_ind = np.linspace(0, Nz-1, num=Nz, dtype=int)
-    dz=0.01 # m
+    dz=0.0002 # m
     Yee_Grid_Space=Yee_Grid_Space_ind*dz
     H_x = np.zeros(Nz)
     E_y = np.zeros(Nz)
@@ -21,7 +21,7 @@ def fdtd_cell_1D(t_space_ind, src_ind):
     #main FDTD loop
     E1 = E_y[0]
     tau = delta_t*3
-    g = np.exp(-(delta_t*(t_space_ind-10)/tau)**2)
+    g = np.exp(-(delta_t*(t_space_ind-50)/tau)**2)
     E_y_all_time = Yee_Grid_Space
     for t in t_space_ind:
 
