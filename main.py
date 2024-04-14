@@ -5,6 +5,11 @@ from numpy.random import random
 import matplotlib.pyplot as plt
 import time
 
+def my_range(start, end, step):
+    while start <= end:
+        yield start
+        start += step
+
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
     print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
@@ -82,7 +87,7 @@ print(aa.shape)
 
 
 #2D FDTD
-num_time_point=201
+num_time_point=1001
 t_space_ind = np.linspace(0, num_time_point-1, num=num_time_point, dtype=int)
 src_ind = 50
 aa = fdtd_cell_2D(t_space_ind, src_ind)
@@ -95,8 +100,8 @@ fig, ax = plt.subplots()
 #plt.ylim(-2, 2)
 #plt.xlim(0,10)
 img_initial = aa[0]
-image = ax.imshow(img_initial, cmap='gray', vmin=0, vmax=5)
-
+#image = ax.imshow(img_initial, cmap='gray', vmin=0, vmax=20)
+image = ax.imshow(img_initial, vmin=-1, vmax=1)
 # setting title
 plt.title("2D FDTD", fontsize=20)
 # setting x-axis label and y-axis label
@@ -104,7 +109,7 @@ plt.xlabel("X-axis")
 plt.ylabel("Y-axis")
 
 
-for t in t_space_ind:
+for t in my_range(t_space_ind[1], t_space_ind[num_time_point-1], 4): #t_space_ind:
     new_image = aa[t]
     # updating data values
     image.set_data(new_image)
@@ -115,7 +120,7 @@ for t in t_space_ind:
     # loop until all UI events
     # currently waiting have been processed
     fig.canvas.flush_events()
-    time.sleep(0.001)
+    time.sleep(0.0001)
 
 
 
@@ -124,7 +129,7 @@ for t in t_space_ind:
 #plt.show()
 #
 #print(aa[0])
-#print(aa[20])
+print(np.amax(aa[t]))
 
 
 
