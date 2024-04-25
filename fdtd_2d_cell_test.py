@@ -6,19 +6,18 @@ import numpy as np
 # array variables are stored in 2D arrays of size Nx*Ny
 def fdtd_cell_2D_test(t_space_ind, src_ind):
 
-    e0 = 8.854 * 10 ** -12
-    mu0 = 4 * np.pi * 10 ** -7
-    c0 = np.sqrt(1/(e0*mu0))  # m/s
-    c=1
-    lamda = 500 * 10 ** -9  # m
-    f = lamda / c0
+    #e0 = 8.854 * 10 ** -12
+    #mu0 = 4 * np.pi * 10 ** -7
+    #c = np.sqrt(1/(e0*mu0))  # m/s
+    c = 1 # unit 3*10**8 m/s
+
     Nx = 101
     Ny = 101
     Yee_Grid_X_Space_ind = np.linspace(0, Nx - 1, num=Nx, dtype=int)
     Yee_Grid_Y_Space_ind = np.linspace(0, Ny - 1, num=Ny, dtype=int)
-    dx = 1
-    dy = 1
-    dt = min(dx, dy) / np.sqrt(2) / c
+    dx = 10**-6 # m
+    dy = 10**-6
+    dt = min(dx, dy) / np.sqrt(2) / c # unit 1/(3*10**8) s
     Yee_Grid_X_Space, Yee_Grid_Y_Space = np.meshgrid(Yee_Grid_X_Space_ind*dx, Yee_Grid_Y_Space_ind*dy)
 
     E_z = np.zeros((Nx, Ny))
@@ -47,10 +46,6 @@ def fdtd_cell_2D_test(t_space_ind, src_ind):
         E_z_all_time_list = np.concatenate((E_z_all_time_list, E_z[np.newaxis, :, :]), axis=0)
 
 
-        # E_y_all_time = np.array(E_y_all_time.T, E_y.T)
-    ###########################################
-    # out_array = np.append(Yee_Grid_Space, E_y, axis=0)
-    # out_array = np.array([out_array[:101], out_array[101:]])
     out_array_list = E_z_all_time_list
-    # out_array = np.array([Yee_Grid_Space.T, E_y.T])
+
     return out_array_list, g
